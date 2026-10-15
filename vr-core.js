@@ -518,10 +518,14 @@ VR.boot=function(playVideo,skipVideo){
   enterBtn.addEventListener('click',go);
   re.addEventListener('click',()=>VR.enter().catch(()=>{}));
   el.querySelector('#vr-flat').addEventListener('click',()=>start(false));
+  /* isSessionSupported() can report false inside installed Quest web apps even though
+     requestSession() works, so only a missing navigator.xr disables the button */
+  const hasXR=!!(navigator.xr&&navigator.xr.requestSession);
   VR.supported().then(ok=>{
-    enterBtn.disabled=!ok;enterBtn.textContent=ok?'ENTER VR':'VR NOT AVAILABLE';
-    if(!ok)status.textContent=window.isSecureContext?'OPEN THIS PAGE IN THE META QUEST BROWSER':'WEBXR NEEDS HTTPS (OR LOCALHOST)';
+    enterBtn.disabled=!(ok||hasXR);enterBtn.textContent=(ok||hasXR)?'ENTER VR':'VR NOT AVAILABLE';
+    if(!hasXR)status.textContent=window.isSecureContext?'WEBXR IS NOT AVAILABLE IN THIS BROWSER':'WEBXR NEEDS HTTPS (OR LOCALHOST)';
     else if(resume)status.textContent='RETURNING TO THE ABYSS…';
+    else if(!ok)status.textContent='HEADSET CHECK WAS UNCERTAIN — PRESS ENTER VR TO TRY';
   });
   if(navigator.xr&&navigator.xr.addEventListener)navigator.xr.addEventListener('sessiongranted',()=>{if(!VR.presenting)go();});
 };

@@ -2,7 +2,7 @@
    Code/HTML: network-first (updates land when online).
    Audio + three.js: cache-first (precached on install).
    intro.mp4 (72 MB, range-streamed) is left to the network; offline the game skips it. */
-const VERSION='aw-vr-v1';
+const VERSION='aw-vr-v2';
 const CORE=['./','index.html','vr-core.js','vr-ui.js','manifest.webmanifest','icons/icon-192.png','icons/icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'];
 const AUDIO=['Start_Menu.mp3','Main_Menu.mp3','Boss_one.mp3','Boss_two.mp3','Boss_three.mp3','Boss_four.mp3','Boss_five.mp3',
